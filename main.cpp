@@ -1,4 +1,5 @@
 #include "othello16.h"
+#include "gamti.h"
 #include <iostream>
 #include <assert.h>
 
@@ -43,6 +44,7 @@ int main()
             int x,y;
             if(turn == color)
             {
+                reset_time();
                 pt=ai.get();
                 x=pt.first,y=pt.second;
                 cout<<x<<' '<<y<<endl;
@@ -52,7 +54,7 @@ int main()
             o.play(turn,x,y);
             ai.move(turn,x,y);
             assert(ai.o.tostring()==o.tostring());
-            cout<<o.tostring()<<endl<<o<<endl;
+            cerr<<o.tostring()<<endl<<o<<endl;
         }else if(!o.canmove(3^turn)){
             break;
         }
