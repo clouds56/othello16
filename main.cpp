@@ -44,10 +44,11 @@ int main()
     string s;
     othello_ai ai;
     othello16 o;
-    cout<<"color,turn,string>";
-    cin>>color>>turn>>s;
+    //cout<<"color,turn,string>";
+    //cin>>color>>turn>>s;
     o.init();
-    o.init(color, s);
+    color=turn=o.mycolor,s=o.tostring();
+    //o.init(color, s);
     ai.init(color, s);
     while(true)
     {
@@ -65,8 +66,14 @@ int main()
                 cerr<<"Return value:"<<x<<','<<y<<endl;
                 cout<<x<<' '<<y<<endl;
             }else{
-                printall(cerr<<"============================"<<endl,o.allmove(turn))<<endl<<'>';
-                cin>>x>>y;
+                int ch;
+                vector<pair<int,int> >vec=o.allmove(turn);
+                printall(cerr<<"============================"<<endl,vec)<<endl<<'>';
+                //cin>>x>>y;
+                cin>>ch;
+                x=vec[ch].first,y=vec[ch].second;
+                assert(0<=x && x<vec.size());
+                cout<<x<<' '<<y<<endl;
             }
             o.play(turn,x,y);
             ai.move(turn,x,y);
