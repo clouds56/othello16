@@ -5,6 +5,24 @@
 const int othello16::direction[8][2]={{-1,-1},{0,-1},{1,-1},{-1,0},{1,0},{-1,1},{0,1},{1,1}};
 const int othello16::MAXN = 16;
 
+static const string sinit=""
+"0000000000000000"
+"0000000000000000"
+"0000000000000000"
+"0000000000000000"
+"0000000000000000"
+"0000000000000000"
+"0000000120000000"
+"0000000210000000"
+"0000000000000000"
+"0000000000000000"
+"0000000000000000"
+"0000000000000000"
+"0000000000000000"
+"0000000000000000"
+"0000000000000000"
+"0000000000000000";
+
 #define ASSERTCOLOR(color) assert(0<=color && color<=2)
 #define ASSERTUSERCOLOR(color) assert(0<color && color<=2)
 #define ASSERTRANGE(x,y) assert(0<=x && x<MAXN && 0<=y && y<MAXN)
@@ -18,10 +36,7 @@ void othello16::set(int color, int x, int y)
 
 void othello16::init()
 {
-    for(int i=0; i<MAXN; i++)
-        for(int j=0; j<MAXN; j++)
-            this->map[i][j]=0;
-    mycolor = 0;
+    init(1,sinit);
 }
 
 void othello16::init(int color, string s)
