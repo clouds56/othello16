@@ -1,5 +1,6 @@
 #include "othello16.h"
 #include <assert.h>
+#include <iostream>
 
 const int othello16::direction[8][2]={{-1,-1},{0,-1},{1,-1},{-1,0},{1,0},{-1,1},{0,1},{1,1}};
 const int othello16::MAXN = 16;
@@ -11,6 +12,7 @@ const int othello16::MAXN = 16;
 void othello16::set(int color, int x, int y)
 {
     ASSERTRANGE(x,y);
+    ASSERTCOLOR(color);
     this->map[x][y]=color;
 }
 
@@ -129,7 +131,10 @@ string othello16::tostring()
 {
     string s;
     for(int i=0;i<MAXN;i++)
-        for(int j;j<MAXN;j++)
+        for(int j=0;j<MAXN;j++)
+        {
+            ASSERTCOLOR(this->map[i][j]);
             s.push_back(this->map[i][j]+'0');
+        }
     return s;
 }
