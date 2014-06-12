@@ -1,12 +1,14 @@
 #include "othello16.h"
 #include <iostream>
+#include <assert.h>
 
 using namespace std;
 
 class othello_ai
 {
+    public:
     othello16 o;//ÊµÀý»¯othello16Àà
-public:
+
     void init(int color, string s);
     void move(int color, int x, int y);
     pair<int, int> get();
@@ -49,6 +51,7 @@ int main()
             }
             o.play(turn,x,y);
             ai.move(turn,x,y);
+            assert(ai.o.tostring()==o.tostring());
             cout<<o.tostring()<<endl<<o<<endl;
         }else if(!o.canmove(3^turn)){
             break;
