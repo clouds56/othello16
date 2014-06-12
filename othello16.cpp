@@ -39,7 +39,7 @@ int othello16::count(int color)
     ASSERTCOLOR(color);
     for(int i=0; i<MAXN; i++)
         for(int j=0; j<MAXN; j++)
-            cnt += this->map[i][j]==color;
+            cnt += is(color,i,j);
     return cnt;
 }
 
@@ -54,7 +54,7 @@ bool othello16::canmove(int color, int x, int y)
 {
     ASSERTRANGE(x,y);
     ASSERTUSERCOLOR(color);
-    if(this->map[x][y]!=0)
+    if(!is(0,x,y))
         return false;
     for(int k=0; k<8; k++)///8 direction
     {
@@ -95,6 +95,7 @@ vector<pair<int, int> > othello16::allmove(int color)
 
 bool othello16::play(int turn, int &x, int &y)///confuse why use reference
 {
+    int tx=x,ty=y;
     ASSERTUSERCOLOR(turn);
     ASSERTRANGE(x,y);
     bool cm=false;///canmove
@@ -118,12 +119,13 @@ bool othello16::play(int turn, int &x, int &y)///confuse why use reference
         if(r==2)
         {
             do{
-                i-=direction[k][0],y-=direction[k][0];
-                this->map[i][j] = turn;
-            }while(i!=x && j!=y);
+                i-=direction[k][0],j-=direction[k][1];
+                set(turn, i, j);
+            }while(i!=x || j!=y);
             cm=true;
         }
     }
+    assert(tx==x&&ty==y);
     return cm;
 }
 
