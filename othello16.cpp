@@ -58,16 +58,17 @@ bool othello16::canmove(int color, int x, int y)
         return false;
     for(int k=0; k<8; k++)///8 direction
     {
-        int i=x,j=y,r=false;
-        do{
-            i+=direction[k][0],j+=direction[k][1];
-            if((3^color) == this->map[i][j])
+        int dx=direction[k][0],dy=direction[k][1];
+        bool r=false;
+        for(int i=x+dx,j=y+dy;0<=i&&i<MAXN && 0<=j&&j<MAXN;i+=dx,j+=dy)
+        {
+            if(is(3^color,i,j))
                 r=true;
-            else if(r==true && color == this->map[i][j])
+            else if(r==true && is(color,i,j))
                 return r;
             else
                 break;
-        }while(0<=i&&i<MAXN && 0<=j&&j<MAXN);
+        }
     }
     return false;
 }
@@ -103,23 +104,24 @@ bool othello16::play(int turn, int &x, int &y)///confuse why use reference
         return cm;
     for(int k=0; k<8; k++)
     {
-        int i=x,j=y,r=0;
-        do{
-            i+=direction[k][0],j+=direction[k][1];
-            if((3^turn) == this->map[i][j])
+        int dx=direction[k][0],dy=direction[k][1];
+        int i,j,r=0;
+        for(i=x+dx,j=y+dy;0<=i&&i<MAXN && 0<=j&&j<MAXN;i+=dx,j+=dy)
+        {
+            if(is(3^turn,i,j))
                 r=1;
-            else if(r==1 && turn == this->map[i][j])
+            else if(r==1 && is(turn,i,j))
             {
                 r=2;
                 break;
             }
             else
                 break;
-        }while(0<=i&&i<MAXN && 0<=j&&j<MAXN);
+        }
         if(r==2)
         {
             do{
-                i-=direction[k][0],j-=direction[k][1];
+                i-=dx,j-=dy;
                 set(turn, i, j);
             }while(i!=x || j!=y);
             cm=true;
