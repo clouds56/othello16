@@ -25,18 +25,30 @@ ostream &operator<<(ostream&o,othello16&a)
     return o;
 }
 
+ostream &printall(ostream&o,vector<pair<int,int> >vec)
+{
+    o<<"All:"<<vec.size()<<endl;
+    for(vector<pair<int,int> >::iterator it=vec.begin(); it!=vec.end(); it++)
+    {
+        o<<it->first<<','<<it->second<<'\t';
+        if((it-vec.begin())%5==4 && (vec.end()-it)!=1)
+            o<<endl;
+    }
+    return o;
+}
+
 int main()
 {
     pair<int,int> pt;
-    int color;
+    int color,turn;
     string s;
     othello_ai ai;
     othello16 o;
-    cin>>color>>s;
+    cout<<"color,turn,string>";
+    cin>>color>>turn>>s;
     o.init();
     o.init(color, s);
     ai.init(color, s);
-    int turn = color;
     while(true)
     {
         if(o.canmove(turn))
@@ -44,17 +56,22 @@ int main()
             int x,y;
             if(turn == color)
             {
+                cerr<<"----------------------------"<<endl;
                 reset_time();
                 pt=ai.get();
+                cerr<<"----------------------------"<<endl
+                    <<"Time usage:"<<get_time()<<endl;
                 x=pt.first,y=pt.second;
+                cerr<<"Return value:"<<x<<','<<y<<endl;
                 cout<<x<<' '<<y<<endl;
             }else{
+                printall(cerr<<"============================"<<endl,o.allmove(turn))<<endl<<'>';
                 cin>>x>>y;
             }
             o.play(turn,x,y);
             ai.move(turn,x,y);
             assert(ai.o.tostring()==o.tostring());
-            cerr<<o.tostring()<<endl<<o<<endl;
+            cerr<<o.tostring()<<endl<<o;
         }else if(!o.canmove(3^turn)){
             break;
         }
