@@ -25,3 +25,5 @@ othello16
   * `ai*`->Compiler settings->#defines添加`_AI*`（把`AI*`替换成`AI1`，`AI2`）
 4. Build `ai*`
 5. 将`runner.py`复制到`ai*.exe`所在文件夹，运行
+6. 使用`mathematica`打开`Show.nb`修改`pt.log`路径名然后运行
+7. **注意：请将`grep`和`sed`加入系统路径或者自行参考`runner.py`中生成`pt.log`的代码手动生成**
