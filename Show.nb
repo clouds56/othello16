@@ -13,6 +13,7 @@ tab[m_] := MapIndexed[{##} &, m, {2}]
 map[tm_List] := Map[First, tm, {2}]
 str[m_] := StringJoin[ToString /@ Flatten[m]]
 map[s_String] := Partition[ToExpression /@ Characters[s], n]
+cnt[m_] := Count[Flatten[m], #] & /@ Range[0, 2]
 Repeated0[p_, n_] := If[n <= 0, PatternSequence[], Repeated[p, {n}]]
 dire = {{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 
     1}, {1, 1}};
@@ -29,13 +30,15 @@ do[m_, {c_, x_}] :=
 dd = {First[#], Rest[#] + 1} & /@ 
    Import["D:\\home\\Clouds\\Projects\\ai\\othello\\bin\\ai\\pt.log"];
 show[(t \[Function] Last /@ Select[dd, First[#] == t &]) /@ Range[2]]
-gs = (m \[Function] show[Position[m, #] & /@ Range[2]]) /@ 
-   FoldList[do, minit, dd];
+mall = FoldList[do, minit, dd];
+gs = (m \[Function] show[Position[m, #] & /@ Range[2]]) /@ mall;
 gs2 = Show[#1, 
      ListPlot[Rest@#2 + .5, 
       PlotStyle -> Directive[Red, PointSize[0.05]]]] & @@@ 
    Transpose[{Drop[gs, -1], dd}];
+gsall = Flatten[{Transpose[{Drop[gs, -1], gs2}], Take[gs, -1]}];
 CreateDialog@
-  Animate[Framed@gsall[[nn]], {nn, 1, Length[gsall], 1}, 
+  Animate[Column[{cnt[mall[[Floor[nn/2] + 1]]], gsall[[nn]]}, 
+    Frame -> All], {nn, 1, Length[gsall], 1}, 
    AnimationRunning -> False, AnimationRate -> 2, 
    AnimationRepetitions -> 1];
