@@ -86,19 +86,19 @@ int main()
                 reset_time();
                 pt=ai.get();
                 cerr<<"----------------------------"<<endl
-                    <<"Time usage:"<<get_time()<<endl;
+                    <<"Time: "<<get_time()<<endl;
                 x=pt.first,y=pt.second;
-                cerr<<"Return value:"<<x<<','<<y<<endl;
+                cerr<<"Return: "<<x<<','<<y<<endl;
                 cout<<x<<' '<<y<<endl;
             }else{
 #ifndef _RELEASE
-                int ch;
                 vector<pair<int,int> >vec=o.allmove(turn);
                 printall(cerr<<"============================"<<endl,vec)<<endl<<'>';
 #ifndef _T_DEBUG
                 cin>>x>>y;
-                cerr<<"Get:"<<x<<','<<y<<endl;
+                cerr<<"Get: "<<x<<','<<y<<endl;
 #else
+                int ch;
                 cin>>ch;
                 x=vec[ch].first,y=vec[ch].second;
                 assert(0<=ch && ch<vec.size());
