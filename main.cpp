@@ -3,17 +3,28 @@
 #include <iostream>
 #include <assert.h>
 
-using namespace std;
-
-class othello_ai
+#if defined _T_DEBUG || defined _RELEASE
+struct othello16x:public othello16
 {
-    public:
-    othello16 o;//ÊµÀý»¯othello16Àà
-
+    bool play(int turn, const int &x, const int &y);
+};
+struct othello_ai
+{
+    othello16x o;
     void init(int color, string s);
     void move(int color, int x, int y);
     pair<int, int> get();
 };
+#else
+#ifdef _AI1
+#include "../ai1.cpp"
+#endif // _AI1
+#ifdef _AI2
+#include "../ai2.cpp"
+#endif // AI2
+#endif // defined
+
+using namespace std;
 
 ostream &operator<<(ostream&o,othello16&a)
 {
@@ -43,13 +54,27 @@ int main()
     int color,turn;
     string s;
     othello_ai ai;
+#ifdef _RELEASE
+    othello_ai ai2;
+#endif // _RELEASE
     othello16 o;
     //cout<<"color,turn,string>";
     //cin>>color>>turn>>s;
     o.init();
-    color=turn=o.mycolor,s=o.tostring();
+    turn=1,s=o.tostring();
+#ifdef _AI1
+    color=1;
+    o.init(1,s);
+#endif // _AI1
+#ifdef _AI2
+    color=2;
+    o.init(2,s);
+#endif // _AI2
     //o.init(color, s);
     ai.init(color, s);
+#ifdef _RELEASE
+    ai2.init(3^color,s);
+#endif // _RELEASE
     while(true)
     {
         if(o.canmove(turn))
@@ -66,19 +91,37 @@ int main()
                 cerr<<"Return value:"<<x<<','<<y<<endl;
                 cout<<x<<' '<<y<<endl;
             }else{
+#ifndef _RELEASE
                 int ch;
                 vector<pair<int,int> >vec=o.allmove(turn);
                 printall(cerr<<"============================"<<endl,vec)<<endl<<'>';
-                //cin>>x>>y;
+#ifndef _T_DEBUG
+                cin>>x>>y;
+                cerr<<"Get:"<<x<<','<<y<<endl;
+#else
                 cin>>ch;
                 x=vec[ch].first,y=vec[ch].second;
-                assert(0<=x && x<vec.size());
+                assert(0<=ch && ch<vec.size());
                 cout<<x<<' '<<y<<endl;
+#endif // _T_DEBUG
+#else
+                cerr<<"****************************"<<endl;
+                reset_time();
+                pt=ai2.get();
+                cerr<<"****************************"<<endl
+                    <<"Time usage:"<<get_time()<<endl;
+                x=pt.first,y=pt.second;
+                cerr<<"Return value:"<<x<<','<<y<<endl;
+                cout<<x<<' '<<y<<endl;
+#endif // _RELEASE
             }
             o.play(turn,x,y);
             ai.move(turn,x,y);
+#ifdef _RELEASE
+            ai2.move(turn,x,y);
+#endif
             assert(ai.o.tostring()==o.tostring());
-            cerr<<o.tostring()<<endl<<o;
+            cerr<<256-o.count(0)<<"->"<<o.count(1)<<":"<<o.count(2)<<endl<<o.tostring()<<endl<<o;
         }else if(!o.canmove(3^turn)){
             break;
         }
