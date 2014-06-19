@@ -61,7 +61,7 @@ int main()
     //cout<<"color,turn,string>";
     //cin>>color>>turn>>s;
     o.init();
-    turn=1,s=o.tostring();
+    turn=1,color=1,s=o.tostring();
 #ifdef _AI1
     color=1;
     o.init(1,s);
@@ -98,7 +98,7 @@ int main()
                 cin>>x>>y;
                 cerr<<"Get: "<<x<<','<<y<<endl;
 #else
-                int ch;
+                unsigned ch;
                 cin>>ch;
                 x=vec[ch].first,y=vec[ch].second;
                 assert(0<=ch && ch<vec.size());

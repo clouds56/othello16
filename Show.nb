@@ -1,6 +1,6 @@
-n=16;
+pwd=FileNameJoin[{NotebookDirectory[],"ai"}];n=16;
 minit=ReplacePart[Table[0,{16},{16}],{{{8,9},{9,8}}->2,{{8,8},{9,9}}->1}];
-show[tm_]:=Show[ListPlot[#+.5&/@tm,Axes->False,PlotStyle->(Directive[#,PointSize[0.05]]&/@{Black,White}),Background->Green,AspectRatio->1,PlotRange->{{1,n+1},{1,n+1}}],ParametricPlot[{#,t}&/@Range[2,n],{t,1,n+1}],ParametricPlot[{t,#}&/@Range[2,n],{t,1,n+1}]]
+show[tm_]:=Show[ListPlot[#+.5&/@tm,Axes->False,PlotStyle->(Directive[#,PointSize[0.05]]&/@{Black,White}),Background->Green,AspectRatio->1,PlotRange->{{1,n+1},{1,n+1}},ImageSize->Large],ParametricPlot[{#,t}&/@Range[2,n],{t,1,n+1}],ParametricPlot[{t,#}&/@Range[2,n],{t,1,n+1}]]
 tab[m_]:=MapIndexed[{##}&,m,{2}]
 map[tm_List]:=Map[First,tm,{2}]
 str[m_]:=StringJoin[ToString/@Flatten[m]]
@@ -13,7 +13,7 @@ do[m_,{c_,x_}]:=Block[{m1=m},(k\[Function]Block[{rr=False,i=x},While[And@@(1<=#<
 can[m_,{c_,x_}]:=Catch[Block[{m1=m},If[Extract[m,x]!=0,Return[False]];(k\[Function]Block[{rr=False,i=x},While[And@@(1<=#<=n&/@(i+=dire[[k]])),If[Extract[m,i]==3-c,rr=True,If[Extract[m,i]==c&&rr,Throw[True],Break[]]]]])/@Range[1,8];Throw[False]]]
 can[m_,c_Integer]:=Or@@Flatten@Map[can[m,{c,#}]&,Table[{i,j},{i,16},{j,16}],{2}]
 allmove[m_,c_]:=Position[#,True]&@Map[can[m,{c,#}]&,Table[{i,j},{i,16},{j,16}],{2}]
-dd={First[#],Rest[#]+1}&/@Import["D:\\home\\Clouds\\Projects\\ai\\othello\\bin\\ai\\pt.log"];
+dd={First[#],Rest[#]+1}&/@Import[FileNameJoin[{pwd,"pt.log"}]];
 show[(t\[Function]Last/@Select[dd,First[#]==t&])/@Range[2]];
 mall=FoldList[do,minit,dd];
 gs=(m\[Function]show[Position[m,#]&/@Range[2]])/@mall;
