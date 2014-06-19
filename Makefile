@@ -36,4 +36,4 @@ ${OBJDIR}:
 clean:
 	rm -f ${OBJDIR}/ai1 ${OBJDIR}/ai2 ${OBJDIR}/othello ${OBJDIR}/l1.log ${OBJDIR}/l2.log ${OBJDIR}/pt.log ${OBJDIR}/Show.nb
 
-.PHONY: ai1 ai2 debug clean run
+.PHONY: ai1 ai2 debug clean run show

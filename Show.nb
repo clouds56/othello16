@@ -1,5 +1,8 @@
+(* Const and Func defination *)
 pwd=NotebookDirectory[];n=16;
+dire={{-1,-1},{0,-1},{1,-1},{-1,0},{1,0},{-1,1},{0,1},{1,1}};
 minit=ReplacePart[Table[0,{16},{16}],{{{8,9},{9,8}}->2,{{8,8},{9,9}}->1}];
+Repeated0[p_,n_]:=If[n<=0,PatternSequence[],Repeated[p,{n}]]
 show[tm_]:=Show[ListPlot[#+.5&/@tm,Axes->False,PlotStyle->(Directive[#,PointSize[0.05]]&/@{Black,White}),Background->Green,AspectRatio->1,PlotRange->{{1,n+1},{1,n+1}},ImageSize->Large],ParametricPlot[{#,t}&/@Range[2,n],{t,1,n+1}],ParametricPlot[{t,#}&/@Range[2,n],{t,1,n+1}]]
 tab[m_]:=MapIndexed[{##}&,m,{2}]
 map[tm_List]:=Map[First,tm,{2}]
@@ -7,16 +10,18 @@ str[m_]:=StringJoin[ToString/@Flatten[m]]
 map[s_String]:=Partition[ToExpression/@Characters[s],n]
 cnt[m_]:=Count[Flatten[m],#]&/@Range[0,2]
 is[m_,x_,c_]:=Extract[m,x]==c
-Repeated0[p_,n_]:=If[n<=0,PatternSequence[],Repeated[p,{n}]]
-dire={{-1,-1},{0,-1},{1,-1},{-1,0},{1,0},{-1,1},{0,1},{1,1}};
 do[m_,{c_,x_}]:=Block[{m1=m},(k\[Function]Block[{rr=False,i=x},While[And@@(1<=#<=n&/@(i+=dire[[k]])),If[Extract[m,i]==3-c,rr=True,If[Extract[m,i]==c&&rr,While[i!=x,i-=dire[[k]];Part[m1,Sequence@@i]=c];Break[],Break[]]]]])/@Range[1,8];m1]
 can[m_,{c_,x_}]:=Catch[Block[{m1=m},If[Extract[m,x]!=0,Return[False]];(k\[Function]Block[{rr=False,i=x},While[And@@(1<=#<=n&/@(i+=dire[[k]])),If[Extract[m,i]==3-c,rr=True,If[Extract[m,i]==c&&rr,Throw[True],Break[]]]]])/@Range[1,8];Throw[False]]]
 can[m_,c_Integer]:=Or@@Flatten@Map[can[m,{c,#}]&,Table[{i,j},{i,16},{j,16}],{2}]
 allmove[m_,c_]:=Position[#,True]&@Map[can[m,{c,#}]&,Table[{i,j},{i,16},{j,16}],{2}]
+
+(* Data importing and processing *)
 dd={First[#],Rest[#]+1}&/@Import[FileNameJoin[{pwd,"pt.log"}]];
 show[(t\[Function]Last/@Select[dd,First[#]==t&])/@Range[2]];
 mall=FoldList[do,minit,dd];
 gs=(m\[Function]show[Position[m,#]&/@Range[2]])/@mall;
 gs2=Show[#1,ListPlot[Rest@#2+.5,PlotStyle->Directive[Red,PointSize[0.05]]]]&@@@Transpose[{Drop[gs,-1],dd}];
 gsall=Flatten[{Transpose[{Drop[gs,-1],gs2}],Take[gs,-1]}];
-CreateDialog@Animate[Column[{cnt[mall[[Floor[nn/2]+1]]],gsall[[nn]]},Frame->All],{nn,1,Length[gsall],1,AppearanceElements->{"ResetButton","StepLeftButton","ProgressSlider","StepRightButton","PlayPauseButton"}},AnimationRunning->False,AnimationRate->2,AnimationRepetitions->1];
+
+(* Dialog Show *)
+CreateDialog@Animate[Grid[{{cnt[#],Button["Export",Print[str@#]]}&@mall[[Floor[(nn+1)/2]]],{gsall[[nn]],SpanFromLeft}},Frame->All],{nn,1,Length[gsall],1,AppearanceElements->{"ResetButton","StepLeftButton","ProgressSlider","StepRightButton","PlayPauseButton"}},AnimationRunning->False,AnimationRate->2,AnimationRepetitions->1];
