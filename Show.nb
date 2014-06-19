@@ -1,4 +1,4 @@
-pwd=FileNameJoin[{NotebookDirectory[],"ai"}];n=16;
+pwd=NotebookDirectory[];n=16;
 minit=ReplacePart[Table[0,{16},{16}],{{{8,9},{9,8}}->2,{{8,8},{9,9}}->1}];
 show[tm_]:=Show[ListPlot[#+.5&/@tm,Axes->False,PlotStyle->(Directive[#,PointSize[0.05]]&/@{Black,White}),Background->Green,AspectRatio->1,PlotRange->{{1,n+1},{1,n+1}},ImageSize->Large],ParametricPlot[{#,t}&/@Range[2,n],{t,1,n+1}],ParametricPlot[{t,#}&/@Range[2,n],{t,1,n+1}]]
 tab[m_]:=MapIndexed[{##}&,m,{2}]
