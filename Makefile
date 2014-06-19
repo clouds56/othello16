@@ -22,7 +22,7 @@ ${OBJDIR}/othello: ${SOURCE} |${OBJDIR}
 run: ${OBJDIR}/pt.log
 
 show: ${OBJDIR}/pt.log ${OBJDIR}/Show.nb
-	mathematica ${OBJDIR}/Show.nb
+	mathematica -sl -nosplash ${PWD}/${OBJDIR}/Show.nb
 
 ${OBJDIR}/Show.nb: Show.nb
 	cp Show.nb ${OBJDIR}/Show.nb
