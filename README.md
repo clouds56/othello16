@@ -26,5 +26,9 @@ othello16
 4. Build `ai*`
 5. ~~将`runner.py`复制到`ai*.exe`所在文件夹~~**修改`runner.py`中的`pwd`参数为目标文件夹（默认`ai`）**，运行
 6. 使用`mathematica`打开`Show.nb`~~修改`pt.log`路径名~~（**先复制到`pt.log`所在目录**）然后运行
+  * `mathematica`快捷键snippet
+  * 在右边cell上右击`Style`->`InputForm`可以直接整理代码风格
+  * 使用右击`Convert To`->`InputForm`或者`StandardForm`也可以完成但是会丢失注释
+  * 选中第二段代码，快捷键`Ctrl`+`Shift`+`D`可以将代码分成三段
 7. **注意：请将`grep`和`sed`加入系统路径或者自行参考`runner.py`中生成`pt.log`的代码手动生成**
 8. 上面的1-4为`codeblocks`步骤，对于`makefile`用户只需修改`Makefile`中`AIDIR`参数，然后运行`make show`即可
