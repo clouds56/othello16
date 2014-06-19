@@ -11,8 +11,8 @@ othello16
 * 运行时请使用标准输入输出输入对手策略（`x y`的坐标值）
 * 任何疑问请联系Clouds.Flowing@gmail.com
 
-本地对战:（以codeblocks为例）
-----------------------------
+本地对战:（支持codeblocks和makefile）
+------------------------------------
 1. 写两个ai，`ai1.cpp`，`ai2.cpp`
 2. Project->Properties->Build targets
   * 新建(Add)两个build target，命名为`ai1`，`ai2`
@@ -24,6 +24,7 @@ othello16
   * `Release`->Compiler settings->#defines添加`_RELEASE`
   * `ai*`->Compiler settings->#defines添加`_AI*`（把`AI*`替换成`AI1`，`AI2`）
 4. Build `ai*`
-5. 将`runner.py`复制到`ai*.exe`所在文件夹，运行
-6. 使用`mathematica`打开`Show.nb`修改`pt.log`路径名然后运行
+5. ~~将`runner.py`复制到`ai*.exe`所在文件夹~~**修改`runner.py`中的`pwd`参数为目标文件夹（默认`ai`）**，运行
+6. 使用`mathematica`打开`Show.nb`~~修改`pt.log`路径名~~（**先复制到`pt.log`所在目录**）然后运行
 7. **注意：请将`grep`和`sed`加入系统路径或者自行参考`runner.py`中生成`pt.log`的代码手动生成**
+8. 上面的1-4为`codeblocks`步骤，对于`makefile`用户只需修改`Makefile`中`AIDIR`参数，然后运行`make show`即可
