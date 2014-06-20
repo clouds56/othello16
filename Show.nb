@@ -3,7 +3,7 @@ pwd=NotebookDirectory[];n=16;
 dire={{-1,-1},{0,-1},{1,-1},{-1,0},{1,0},{-1,1},{0,1},{1,1}};
 minit=ReplacePart[Table[0,{16},{16}],{{{8,9},{9,8}}->2,{{8,8},{9,9}}->1}];
 Repeated0[p_,n_]:=If[n<=0,PatternSequence[],Repeated[p,{n}]]
-show[tm_]:=Show[ListPlot[#+.5&/@tm,Axes->False,PlotStyle->(Directive[#,PointSize[0.05]]&/@{Black,White}),Background->Green,AspectRatio->1,PlotRange->{{1,n+1},{1,n+1}},ImageSize->Large],ParametricPlot[{#,t}&/@Range[2,n],{t,1,n+1}],ParametricPlot[{t,#}&/@Range[2,n],{t,1,n+1}]]
+show[tm_]:=Show[ListPlot[{Last@#,-First@#}&/@#+.5&/@tm,Axes->False,PlotStyle->(Directive[#,PointSize[0.05]]&/@{Black,White}),Background->Green,AspectRatio->1,PlotRange->{{1,n+1},{-n,0}},ImageSize->Large],ParametricPlot[{#,t}&/@Range[2,n],{t,-n,0}],ParametricPlot[{t,-#}&/@Range[n-1],{t,1,n+1}]]
 tab[m_]:=MapIndexed[{##}&,m,{2}]
 map[tm_List]:=Map[First,tm,{2}]
 str[m_]:=StringJoin[ToString/@Flatten[m]]
@@ -20,7 +20,7 @@ dd={First[#],Rest[#]+1}&/@Import[FileNameJoin[{pwd,"pt.log"}]];
 show[Function[t,Last/@Select[dd,First[#]==t&]/.{}->{{}}]/@Range[2]];
 mall=FoldList[do,minit,dd];
 gs=Function[m,show[(Position[m,#]/.{}->{{}}&)/@Range[2]]]/@mall;
-gs2=Show[#1,ListPlot[Rest@#2+.5,PlotStyle->Directive[Red,PointSize[0.05]]]]&@@@Transpose[{Drop[gs,-1],dd}];
+gs2=Show[#1,ListPlot[{Last@#,-First@#}&/@Rest@#2+.5,PlotStyle->Directive[Red,PointSize[0.05]]]]&@@@Transpose[{Drop[gs,-1],dd}];
 gsall=Flatten[{Transpose[{Drop[gs,-1],gs2}],Take[gs,-1]}];
 
 (* Dialog Show *)
