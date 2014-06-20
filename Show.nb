@@ -17,9 +17,9 @@ allmove[m_,c_]:=Position[#,True]&@Map[can[m,{c,#}]&,Table[{i,j},{i,16},{j,16}],{
 
 (* Data importing and processing *)
 dd={First[#],Rest[#]+1}&/@Import[FileNameJoin[{pwd,"pt.log"}]];
-show[(t\[Function]Last/@Select[dd,First[#]==t&])/@Range[2]];
+show[Function[t,Last/@Select[dd,First[#]==t&]/.{}->{{}}]/@Range[2]];
 mall=FoldList[do,minit,dd];
-gs=(m\[Function]show[Position[m,#]&/@Range[2]])/@mall;
+gs=Function[m,show[(Position[m,#]/.{}->{{}}&)/@Range[2]]]/@mall;
 gs2=Show[#1,ListPlot[Rest@#2+.5,PlotStyle->Directive[Red,PointSize[0.05]]]]&@@@Transpose[{Drop[gs,-1],dd}];
 gsall=Flatten[{Transpose[{Drop[gs,-1],gs2}],Take[gs,-1]}];
 
