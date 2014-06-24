@@ -27,7 +27,10 @@ show: ${OBJDIR}/pt.log ${OBJDIR}/Show.nb
 ${OBJDIR}/Show.nb: Show.nb
 	cp Show.nb ${OBJDIR}/Show.nb
 
-${OBJDIR}/pt.log: ${OBJDIR}/ai1 ${OBJDIR}/ai2 runner.py
+${OBJDIR}/pt.log: ${OBJDIR}/l1.log ${OBJDIR}/l2.log
+	grep "\(Ret\|Get\)" ${OBJDIR}/l1.log|sed "s/Return: /1,/"|sed "s/>Get: /2,/">${OBJDIR}/pt.log
+
+${OBJDIR}/l1.log: ${OBJDIR}/ai1 ${OBJDIR}/ai2 runner.py
 	python3 runner.py
 
 ${OBJDIR}:
