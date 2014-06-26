@@ -24,4 +24,4 @@ gs2=Show[#1,ListPlot[{Last@#,-First@#}&/@Rest@#2+.5,PlotStyle->Directive[Red,Poi
 gsall=Flatten[{Transpose[{Drop[gs,-1],gs2}],Take[gs,-1]}];
 
 (* Dialog Show *)
-CreateDialog@Animate[Grid[{{cnt[#],Button["Export",Print[str@#]]}&@mall[[Floor[(nn+1)/2]]],{gsall[[nn]],SpanFromLeft}},Frame->All],{nn,1,Length[gsall],1,AppearanceElements->{"ResetButton","StepLeftButton","ProgressSlider","StepRightButton","PlayPauseButton"}},AnimationRunning->False,AnimationRate->2,AnimationRepetitions->1];
+CreateDialog@Animate[Grid[{{cnt[#],Button["Export",Print[str@#]]}&@mall[[Floor[(nn+1)/2]]],{gsall[[nn]],SpanFromLeft}},Frame->All],{nn,1,Length[gsall],1,AppearanceElements->{"ResetButton","StepLeftButton","ProgressSlider","StepRightButton","PlayPauseButton"}},AnimationRunning->False,AnimationRate->4,AnimationRepetitions->1];
