@@ -24,8 +24,8 @@ othello16
   * `Release`->Compiler settings->#defines添加`_RELEASE`
   * `ai*`->Compiler settings->#defines添加`_AI*`（把`AI*`替换成`AI1`，`AI2`）
 4. Build `ai*`
-5. ~~将`runner.py`复制到`ai*.exe`所在文件夹~~**修改`runner.py`中的`pwd`参数为目标文件夹（默认`ai`）**，运行
-6. 使用`mathematica`打开`Show.nb`~~修改`pt.log`路径名~~（**先复制到`pt.log`所在目录**）然后运行
+5. **修改`runner.py`中的`pwd`参数为目标文件夹（默认`ai`）**，运行
+6. 使用`mathematica`打开`Show.nb`（**先复制到`pt.log`所在目录**）然后运行
   * `mathematica`快捷键snippet
   * 在右边cell上右击`Style`->`InputForm`可以直接整理代码风格
   * 使用右击`Convert To`->`InputForm`或者`StandardForm`也可以完成但是会丢失注释
